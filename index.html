@@ -133,7 +133,6 @@
       display: inline-block;
     }
 
-    /* Slots */
     .slots-row {
       display: flex;
       justify-content: center;
@@ -333,14 +332,13 @@
 <body>
 <div class="container">
   <div class="header-row">
-    <h1 id="mainTitle">🥑 Keto‑Baukasten</h1>
+    <h1 id="mainTitle">🥑 Keto‑Baukasten · Varga</h1>
     <button class="lang-btn" id="langToggle">🌐 EN</button>
   </div>
   <div class="subtitle" id="subtitle">nach Dr. Berg · 2 Mahlzeiten · &lt;20g KH</div>
 
   <div class="gerichte-grid" id="gerichtGrid"></div>
 
-  <!-- Zwei Mahlzeiten-Slots -->
   <div class="slots-row" id="slotsRow"></div>
 
   <div class="controls">
@@ -374,7 +372,7 @@
     // ---------- LANGUAGE & TRANSLATIONS ----------
     const translations = {
       de: {
-        title: "🥑 Keto‑Baukasten",
+        title: "🥑 Keto‑Baukasten · Varga",
         subtitle: "nach Dr. Berg · 2 Mahlzeiten · <20g KH",
         selectInfo0: "🔹 Wähle bis zu 2 Gerichte – klicke auf eine Karte",
         selectInfo1: "🔹 1/2 Mahlzeiten gewählt – klicke für zweite Mahlzeit",
@@ -400,7 +398,7 @@
         slotRemove: "×"
       },
       en: {
-        title: "🥑 Keto Builder",
+        title: "🥑 Keto Builder · Varga",
         subtitle: "Dr. Berg style · 2 meals · <20g carbs",
         selectInfo0: "🔹 Select up to 2 meals – tap a card",
         selectInfo1: "🔹 1/2 meals selected – tap for second meal",
@@ -552,7 +550,6 @@
     const wochenContainer = document.getElementById('wochenContainer');
     const langToggle = document.getElementById('langToggle');
 
-    // Helper: get translated string
     function t(key) {
       return translations[currentLang][key] || key;
     }
@@ -571,17 +568,14 @@
       return einheit;
     }
 
-    // Count how many times a dish id appears in slots
     function countInSlots(id) {
       return selectedSlots.filter(s => s === id).length;
     }
 
-    // Get array of actual gericht objects from slots (ignoring null)
     function getSelectedGerichte() {
       return selectedSlots.filter(id => id !== null).map(id => gerichte.find(g => g.id === id));
     }
 
-    // Apply language to static texts
     function applyLanguage() {
       document.getElementById('mainTitle').textContent = t('title');
       document.getElementById('subtitle').innerHTML = t('subtitle');
@@ -607,7 +601,6 @@
       else auswahlInfo.textContent = t('selectInfo2');
     }
 
-    // Render dish cards with badges
     function renderGrid() {
       grid.innerHTML = '';
       gerichte.forEach(g => {
@@ -626,7 +619,6 @@
       });
     }
 
-    // Slot rendering
     function renderSlots() {
       slotsRow.innerHTML = '';
       for (let i = 0; i < 2; i++) {
@@ -644,16 +636,11 @@
             `<div class="meal-slot-content" style="color:#94a3b8;">${t('slotEmpty')}</div>`
           }
         `;
-        // Click on empty slot could also trigger? Not needed. Remove button handled separately.
         slotDiv.addEventListener('click', (e) => {
-          if (e.target.classList.contains('remove-slot')) return; // handled below
-          if (!gericht) {
-            // Optional: maybe focus? Do nothing.
-          }
+          if (e.target.classList.contains('remove-slot')) return;
         });
         slotsRow.appendChild(slotDiv);
       }
-      // Add event listeners to remove buttons
       document.querySelectorAll('.remove-slot').forEach(btn => {
         btn.addEventListener('click', (e) => {
           e.stopPropagation();
@@ -665,7 +652,6 @@
     }
 
     function handleGerichtClick(id) {
-      // Find first empty slot
       const emptyIndex = selectedSlots.findIndex(s => s === null);
       if (emptyIndex === -1) {
         alert(currentLang === 'de' ? 'Beide Mahlzeiten sind bereits ausgewählt. Entferne zuerst eine Mahlzeit über das ×.' : 'Both meals already selected. Remove one first via ×.');
@@ -777,7 +763,6 @@
       wochenContainer.style.display = 'none';
     }
 
-    // Language toggle
     langToggle.addEventListener('click', () => {
       currentLang = currentLang === 'de' ? 'en' : 'de';
       applyLanguage();
