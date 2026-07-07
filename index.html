@@ -20,12 +20,12 @@
       color: #1e293b;
     }
     .container {
-      max-width: 850px;
+      max-width: 950px;
       width: 100%;
       background: white;
       border-radius: 2.5rem;
       padding: 2rem 1.8rem;
-      box-shadow: 0 20px 35px rgba(0,0,0,0.05);
+      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.05);
       margin-bottom: 1.5rem;
     }
     .header-row {
@@ -34,6 +34,7 @@
       align-items: center;
       flex-wrap: wrap;
       margin-bottom: 0.5rem;
+      gap: 0.5rem;
     }
     h1 {
       font-size: 1.9rem;
@@ -44,7 +45,14 @@
       background-clip: text;
       margin: 0;
     }
-    .lang-btn {
+    .header-buttons {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .lang-btn,
+    .sound-btn {
       background: white;
       border: 2px solid #e2e8f0;
       border-radius: 3rem;
@@ -55,10 +63,15 @@
       transition: all 0.2s;
       font-size: 0.9rem;
     }
-    .lang-btn:hover {
+    .lang-btn:hover,
+    .sound-btn:hover {
       border-color: #4290f5;
       color: #4290f5;
       background: #f0f7ff;
+    }
+    .sound-btn.muted {
+      opacity: 0.5;
+      text-decoration: line-through;
     }
     .subtitle {
       text-align: center;
@@ -79,18 +92,22 @@
       border: 2px solid #e2e8f0;
       border-radius: 1.5rem;
       padding: 1.2rem 0.8rem 0.8rem;
-      width: 140px;
+      width: 160px;
       text-align: center;
       cursor: pointer;
       transition: all 0.2s ease;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
       position: relative;
       user-select: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
     }
     .gericht-card:hover {
       border-color: #b9d3f0;
       transform: translateY(-3px);
-      box-shadow: 0 12px 22px rgba(66,144,245,0.12);
+      box-shadow: 0 12px 22px rgba(66, 144, 245, 0.12);
     }
     .gericht-card.active-badge {
       border-color: #4290f5;
@@ -110,8 +127,51 @@
       justify-content: center;
       font-weight: 800;
       font-size: 0.8rem;
-      box-shadow: 0 2px 6px rgba(245,66,138,0.4);
+      box-shadow: 0 2px 6px rgba(245, 66, 138, 0.4);
       border: 2px solid white;
+      z-index: 2;
+    }
+    .custom-star {
+      position: absolute;
+      top: -6px;
+      left: -6px;
+      background: #f5b042;
+      color: white;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      box-shadow: 0 2px 6px rgba(245, 176, 66, 0.4);
+      border: 2px solid white;
+      z-index: 2;
+    }
+    .card-icons {
+      position: absolute;
+      bottom: 0.5rem;
+      right: 0.5rem;
+      display: flex;
+      gap: 0.3rem;
+    }
+    .card-icon-btn {
+      background: #f1f5f9;
+      border: none;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.2s;
+      color: #475569;
+    }
+    .card-icon-btn:hover {
+      background: #e2e8f0;
+      color: #0f172a;
     }
     .gericht-emoji {
       font-size: 2.5rem;
@@ -123,6 +183,7 @@
       line-height: 1.3;
       color: #0f172a;
       margin: 0.4rem 0;
+      word-break: break-word;
     }
     .gericht-kcal {
       font-size: 0.75rem;
@@ -132,7 +193,6 @@
       border-radius: 2rem;
       display: inline-block;
     }
-
     .slots-row {
       display: flex;
       justify-content: center;
@@ -144,7 +204,7 @@
       background: #f8fafc;
       border: 2px dashed #cbd5e1;
       border-radius: 2rem;
-      width: 200px;
+      width: 220px;
       min-height: 110px;
       display: flex;
       flex-direction: column;
@@ -160,7 +220,6 @@
       border-style: solid;
       border-color: #4290f5;
       background: #f0f7ff;
-      cursor: pointer;
     }
     .meal-slot-label {
       font-weight: 700;
@@ -194,12 +253,14 @@
       justify-content: center;
       font-size: 1rem;
       line-height: 1;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     }
     .controls {
       display: flex;
       justify-content: center;
+      flex-wrap: wrap;
       margin: 0.5rem 0 1rem;
+      gap: 0.5rem;
     }
     .auswahl-info {
       text-align: center;
@@ -265,6 +326,21 @@
       padding: 0.5rem 0.2rem;
       border-bottom: 1px solid #f1f5f9;
       font-size: 0.95rem;
+      vertical-align: middle;
+    }
+    .check-col {
+      width: 30px;
+      text-align: center;
+    }
+    .check-col input {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: #4290f5;
+    }
+    tr.checked td {
+      text-decoration: line-through;
+      opacity: 0.5;
     }
     .btn {
       display: inline-block;
@@ -278,12 +354,13 @@
       transition: 0.2s;
       background: #f8fafc;
       color: #1e293b;
+      font-size: 0.9rem;
     }
     .btn-primary {
       background: #f5b042;
       border-color: #f5b042;
       color: white;
-      box-shadow: 0 6px 14px rgba(245,176,66,0.3);
+      box-shadow: 0 6px 14px rgba(245, 176, 66, 0.3);
     }
     .btn-primary:hover {
       background: #f0a028;
@@ -302,6 +379,10 @@
       color: #4290f5;
       font-weight: 700;
     }
+    .btn-small {
+      padding: 0.4rem 1rem;
+      font-size: 0.8rem;
+    }
     .wochen-liste {
       background: #fef9e7;
       border-radius: 1.2rem;
@@ -314,13 +395,107 @@
       color: #64748b;
       margin-top: 0.3rem;
     }
+    /* Modals */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal {
+      background: white;
+      border-radius: 2rem;
+      padding: 2rem;
+      max-width: 500px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+    .modal h3 {
+      margin-bottom: 1rem;
+      color: #0f172a;
+    }
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: #f1f5f9;
+      border: none;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+      color: #334155;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.6rem 1rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 1rem;
+      font-family: inherit;
+      font-size: 0.9rem;
+    }
+    .form-row {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .form-row input {
+      flex: 1;
+    }
+    .ingredient-row {
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    .ingredient-row input {
+      flex: 1;
+    }
+    .ingredient-row select {
+      width: 80px;
+    }
+    .ingredient-row button {
+      background: #fee2e2;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      font-weight: bold;
+    }
     hr {
       margin: 1rem 0;
       border: 0.5px solid #e9eef2;
     }
     @media (max-width: 500px) {
       .gericht-card {
-        width: 120px;
+        width: 140px;
         padding: 1rem 0.4rem 0.6rem;
       }
       .meal-slot {
@@ -330,451 +505,861 @@
   </style>
 </head>
 <body>
-<div class="container">
-  <div class="header-row">
-    <h1 id="mainTitle">🥑 Keto‑Baukasten · Varga</h1>
-    <button class="lang-btn" id="langToggle">🌐 EN</button>
+  <div class="container">
+    <div class="header-row">
+      <h1 id="mainTitle">🥑 Keto‑Baukasten · Varga</h1>
+      <div class="header-buttons">
+        <button class="btn btn-accent" id="btnImport">📥 Importieren</button>
+        <button class="btn btn-accent" id="btnExportAll">📦 Alle exportieren</button>
+        <button class="sound-btn" id="soundToggle" title="Sound ein/aus">🔊</button>
+        <button class="lang-btn" id="langToggle">🌐 EN</button>
+      </div>
+    </div>
+    <div class="subtitle" id="subtitle">nach Dr. Berg · 2 Mahlzeiten · &lt;20g KH</div>
+
+    <div class="gerichte-grid" id="gerichtGrid"></div>
+    <div class="controls">
+      <button class="btn btn-accent" id="btnAddCustom">➕ Eigenes Gericht</button>
+    </div>
+
+    <div class="slots-row" id="slotsRow"></div>
+
+    <div class="controls">
+      <button class="btn btn-reset" id="btnResetTop">↺ Auswahl zurücksetzen</button>
+    </div>
+
+    <div class="auswahl-info" id="auswahlInfo">🔹 Wähle bis zu 2 Gerichte für deinen Tag</div>
+
+    <div class="summen-box" id="summenBox" style="display: none;">
+      <div class="summen-item"><small id="labelKcal">Kalorien</small> <span id="sumKcal">0</span> kcal</div>
+      <div class="summen-item"><small id="labelProtein">Protein</small> <span id="sumProtein">0</span> g</div>
+      <div class="summen-item"><small id="labelFett">Fett</small> <span id="sumFett">0</span> g</div>
+      <div class="summen-item"><small id="labelKh">Netto‑KH</small> <span id="sumKh">0</span> g</div>
+    </div>
+
+    <div class="einkaufsliste" id="einkaufContainer" style="display: none;">
+      <h2 id="shoppingTitle">🛒 Einkaufsliste (1 Tag)</h2>
+      <div style="margin-bottom:0.5rem">
+        <button class="btn btn-small" id="btnCheckAll">☑ Alle abhaken</button>
+        <button class="btn btn-small" id="btnUncheckAll">☐ Alle lösen</button>
+      </div>
+      <table id="tagesTabelle">
+        <thead><tr><th class="check-col">✓</th><th id="thZutat">Zutat</th><th id="thMenge">Menge</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div class="hinweis" id="hintOil">Öle, Essig, Gewürze & Basics sind nicht aufgeführt.</div>
+      <button class="btn btn-primary" id="btnWochen">📆 Wocheneinkauf (×7) anzeigen</button>
+      <button class="btn btn-accent" id="btnResetBottom">↺ Auswahl zurücksetzen</button>
+      <div id="wochenContainer" style="display: none;" class="wochen-liste"></div>
+    </div>
   </div>
-  <div class="subtitle" id="subtitle">nach Dr. Berg · 2 Mahlzeiten · &lt;20g KH</div>
 
-  <div class="gerichte-grid" id="gerichtGrid"></div>
-
-  <div class="slots-row" id="slotsRow"></div>
-
-  <div class="controls">
-    <button class="btn btn-reset" id="btnResetTop">↺ Auswahl zurücksetzen</button>
+  <!-- Zubereitungs-Modal -->
+  <div class="modal-overlay" id="modalZubereitung">
+    <div class="modal">
+      <button class="modal-close" id="closeZubereitung">✕</button>
+      <h3 id="zubereitungTitle">📖 Zubereitung</h3>
+      <div id="zubereitungContent"></div>
+    </div>
   </div>
 
-  <div class="auswahl-info" id="auswahlInfo">🔹 Wähle bis zu 2 Gerichte für deinen Tag</div>
-
-  <div class="summen-box" id="summenBox" style="display: none;">
-    <div class="summen-item"><small id="labelKcal">Kalorien</small> <span id="sumKcal">0</span> kcal</div>
-    <div class="summen-item"><small id="labelProtein">Protein</small> <span id="sumProtein">0</span> g</div>
-    <div class="summen-item"><small id="labelFett">Fett</small> <span id="sumFett">0</span> g</div>
-    <div class="summen-item"><small id="labelKh">Netto‑KH</small> <span id="sumKh">0</span> g</div>
+  <!-- Eigenes Gericht Modal -->
+  <div class="modal-overlay" id="modalCustom">
+    <div class="modal">
+      <button class="modal-close" id="closeCustom">✕</button>
+      <h3 id="customTitle">✨ Eigenes Gericht</h3>
+      <div class="form-group">
+        <label id="lblNameDe">Name (DE)</label>
+        <input type="text" id="customNameDe" placeholder="z.B. Lachs-Omelett" />
+      </div>
+      <div class="form-group">
+        <label id="lblNameEn">Name (EN)</label>
+        <input type="text" id="customNameEn" placeholder="e.g. Salmon Omelette" />
+      </div>
+      <div class="form-group">
+        <label id="lblCategory">Kategorie (für Emoji)</label>
+        <select id="customCategory">
+          <option value="">-- bitte wählen --</option>
+          <option value="huhn">🐔 Huhn / Chicken</option>
+          <option value="fleisch">🥩 Fleisch / Meat</option>
+          <option value="fisch">🐟 Fisch / Fish</option>
+          <option value="wraps">🌯 Wraps</option>
+          <option value="faschiertes">🐄 Faschiertes / Ground</option>
+          <option value="salat">🥗 Salat / Salad</option>
+          <option value="eier">🍳 Eier / Eggs</option>
+          <option value="suppe">🍲 Suppe / Soup</option>
+          <option value="vegetarisch">🥦 Vegetarisch</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label id="lblEmoji">Emoji</label>
+        <input type="text" id="customEmoji" placeholder="🍗" maxlength="4" />
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label id="lblKcal">kcal</label><input type="number" id="customKcal" placeholder="900" /></div>
+        <div class="form-group"><label id="lblProtein">Protein (g)</label><input type="number" id="customProtein" placeholder="80" /></div>
+        <div class="form-group"><label id="lblFett">Fett (g)</label><input type="number" id="customFett" placeholder="70" /></div>
+        <div class="form-group"><label id="lblKh">KH (g)</label><input type="number" id="customKh" placeholder="8" /></div>
+      </div>
+      <div class="form-group">
+        <label id="lblZutaten">Zutaten</label>
+        <div id="ingredientsContainer"></div>
+        <button class="btn btn-small" id="btnAddIngredient">+ Zutat</button>
+      </div>
+      <div class="form-group">
+        <label id="lblZubereitung">Zubereitung (optional)</label>
+        <textarea id="customZubereitung" rows="3" placeholder="Kurze Anleitung..."></textarea>
+      </div>
+      <input type="hidden" id="customEditId" value="" />
+      <button class="btn btn-primary" id="btnSaveCustom">💾 Speichern</button>
+      <button class="btn btn-reset" id="btnDeleteCustom" style="display:none;">🗑 Löschen</button>
+    </div>
   </div>
 
-  <div class="einkaufsliste" id="einkaufContainer" style="display: none;">
-    <h2 id="shoppingTitle">🛒 Einkaufsliste (1 Tag)</h2>
-    <table id="tagesTabelle">
-      <thead><tr><th id="thZutat">Zutat</th><th id="thMenge">Menge</th></tr></thead>
-      <tbody></tbody>
-    </table>
-    <div class="hinweis" id="hintOil">Öle, Essig, Gewürze & Basics sind nicht aufgeführt.</div>
-    <button class="btn btn-primary" id="btnWochen">📆 Wocheneinkauf (×7) anzeigen</button>
-    <button class="btn btn-accent" id="btnResetBottom">↺ Auswahl zurücksetzen</button>
-    <div id="wochenContainer" style="display: none;" class="wochen-liste"></div>
-  </div>
-</div>
+  <!-- Verstecktes Input für Import -->
+  <input type="file" id="importFileInput" accept=".json" style="display: none;" />
 
-<script>
-  (function() {
-    // ---------- LANGUAGE & TRANSLATIONS ----------
-    const translations = {
-      de: {
-        title: "🥑 Keto‑Baukasten · Varga",
-        subtitle: "nach Dr. Berg · 2 Mahlzeiten · <20g KH",
-        selectInfo0: "🔹 Wähle bis zu 2 Gerichte – klicke auf eine Karte",
-        selectInfo1: "🔹 1/2 Mahlzeiten gewählt – klicke für zweite Mahlzeit",
-        selectInfo2: "✅ Beide Mahlzeiten gewählt – perfekt!",
-        labelKcal: "Kalorien",
-        labelProtein: "Protein",
-        labelFett: "Fett",
-        labelKh: "Netto‑KH",
-        shoppingTitle: "🛒 Einkaufsliste (1 Tag)",
-        weekButton: "📆 Wocheneinkauf (×7) anzeigen",
-        resetButton: "↺ Auswahl zurücksetzen",
-        weeklyTitle: "📦 Einkaufsliste für 7 Tage (gleiche Gerichte)",
-        hintOil: "Öle, Essig, Gewürze & Basics sind nicht aufgeführt.",
-        weekHint: "Basierend auf 7× der aktuellen Tagesauswahl. Öle & Basics nicht enthalten.",
-        thZutat: "Zutat",
-        thMenge: "Menge",
-        einheitStueck: "Stück",
-        einheitGramm: "g",
-        langBtn: "🌐 EN",
-        meal1: "1. Mahlzeit",
-        meal2: "2. Mahlzeit",
-        slotEmpty: "+ Gericht wählen",
-        slotRemove: "×"
-      },
-      en: {
-        title: "🥑 Keto Builder · Varga",
-        subtitle: "Dr. Berg style · 2 meals · <20g carbs",
-        selectInfo0: "🔹 Select up to 2 meals – tap a card",
-        selectInfo1: "🔹 1/2 meals selected – tap for second meal",
-        selectInfo2: "✅ Both meals selected – perfect!",
-        labelKcal: "Calories",
-        labelProtein: "Protein",
-        labelFett: "Fat",
-        labelKh: "Net Carbs",
-        shoppingTitle: "🛒 Shopping List (1 day)",
-        weekButton: "📆 Weekly shopping (×7)",
-        resetButton: "↺ Reset selection",
-        weeklyTitle: "📦 Shopping list for 7 days (same meals)",
-        hintOil: "Oils, vinegar, spices & basics are not listed.",
-        weekHint: "Based on 7× current daily selection. Oils & basics not included.",
-        thZutat: "Ingredient",
-        thMenge: "Amount",
-        einheitStueck: "piece(s)",
-        einheitGramm: "g",
-        langBtn: "🌐 DE",
-        meal1: "Meal 1",
-        meal2: "Meal 2",
-        slotEmpty: "+ Select meal",
-        slotRemove: "×"
+  <script>
+    (function() {
+      // ---------- AUDIO ----------
+      let soundEnabled = true;
+      let audioCtx = null;
+      function getAudioCtx() {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        return audioCtx;
       }
-    };
-
-    let currentLang = 'de';
-
-    // ---------- GERICHTS-DATEN (bilingual) ----------
-    const gerichte = [
-      {
-        id: 1,
-        name_de: 'Hähnchenkeule mit Avocado-Salat',
-        name_en: 'Chicken Drumstick with Avocado Salad',
-        emoji: '🍗🥑',
-        kcal: 900, protein: 48, kh: 9, fett: 73,
-        zutaten: [
-          { name_de: 'Hähnchenkeule (mit Haut)', name_en: 'Chicken drumstick (skin on)', mengeGramm: 300, mengeStueck: 0, einheit: 'g' },
-          { name_de: 'Avocado', name_en: 'Avocado', mengeGramm: 120, mengeStueck: 1, einheit: 'Stück' },
-          { name_de: 'Blattsalat (gemischt)', name_en: 'Mixed lettuce', mengeGramm: 150, mengeStueck: 0, einheit: 'g' },
-          { name_de: 'Tomate', name_en: 'Tomato', mengeGramm: 80, mengeStueck: 1, einheit: 'Stück' },
-          { name_de: 'Gurke', name_en: 'Cucumber', mengeGramm: 80, mengeStueck: 0, einheit: 'g' },
-          { name_de: 'Kürbiskerne', name_en: 'Pumpkin seeds', mengeGramm: 15, mengeStueck: 0, einheit: 'g' }
-        ]
-      },
-      {
-        id: 2,
-        name_de: 'Rumpsteak mit Skyr-Dip & Spinat',
-        name_en: 'Rump steak with Skyr dip & spinach',
-        emoji: '🥩🥬',
-        kcal: 950, protein: 80, kh: 9, fett: 62,
-        zutaten: [
-          { name_de: 'Rumpsteak', name_en: 'Rump steak', mengeGramm: 300, mengeStueck: 0, einheit: 'g' },
-          { name_de: 'Skyr (Natur)', name_en: 'Skyr (plain)', mengeGramm: 150, mengeStueck: 0, einheit: 'g' },
-          { name_de: 'Blattspinat', name_en: 'Leaf spinach', mengeGramm: 250, mengeStueck: 0, einheit: 'g' },
-          { name_de: 'Mandelblättchen', name_en: 'Sliced almonds', mengeGramm: 50, mengeStueck: 0, einheit: 'g' }
-        ]
-      },
-      {
-        id: 3,
-        name_de: 'Hähnchen-Omelett mit Brokkoli',
-        name_en: 'Chicken omelette with broccoli',
-        emoji: '🍳🥦',
-        kcal: 920, protein: 110, kh: 9, fett: 50,
-        zutaten: [
-          { name_de: 'Hähnchenbrustfilet', name_en: 'Chicken breast fillet', mengeGramm: 400, mengeStueck: 0, einheit: 'g' },
-          { name_de: 'Eier', name_en: 'Eggs', mengeGramm: 0, mengeStueck: 3, einheit: 'Stück' },
-          { name_de: 'Brokkoli', name_en: 'Broccoli', mengeGramm: 250, mengeStueck: 0, einheit: 'g' },
-          { name_de: 'Cheddar (labfrei)', name_en: 'Cheddar (rennet-free)', mengeGramm: 30, mengeStueck: 0, einheit: 'g' }
-        ]
-      },
-      {
-        id: 4,
-        name_de: 'Rinderhack-Pfanne mit Avocado',
-        name_en: 'Ground beef pan with avocado',
-        emoji: '🐄🥑',
-        kcal: 980, protein: 55, kh: 8, fett: 78,
-        zutaten: [
-          { name_de: 'Rinderhack (20% Fett)', name_en: 'Ground beef (20% fat)', mengeGramm: 300, mengeStueck: 0, einheit: 'g' },
-          { name_de: 'Champignons', name_en: 'Mushrooms', mengeGramm: 100, mengeStueck: 0, einheit: 'g' },
-          { name_de: 'Zucchini', name_en: 'Zucchini', mengeGramm: 150, mengeStueck: 0, einheit: 'g' },
-          { name_de: 'Avocado', name_en: 'Avocado', mengeGramm: 120, mengeStueck: 1, einheit: 'Stück' },
-          { name_de: 'Rucola', name_en: 'Arugula', mengeGramm: 150, mengeStueck: 0, einheit: 'g' }
-        ]
-      },
-      {
-        id: 5,
-        name_de: 'Puten-Wraps mit Mandelsoße',
-        name_en: 'Turkey wraps with almond sauce',
-        emoji: '🌯🥬',
-        kcal: 890, protein: 70, kh: 10, fett: 60,
-        zutaten: [
-          { name_de: 'Putenbrustfilet', name_en: 'Turkey breast fillet', mengeGramm: 300, mengeStueck: 0, einheit: 'g' },
-          { name_de: 'Romanasalat (ganze Blätter)', name_en: 'Romaine lettuce (whole leaves)', mengeGramm: 150, mengeStueck: 0, einheit: 'g' },
-          { name_de: 'Avocado', name_en: 'Avocado', mengeGramm: 120, mengeStueck: 1, einheit: 'Stück' },
-          { name_de: 'Rote Paprika', name_en: 'Red bell pepper', mengeGramm: 50, mengeStueck: 0, einheit: 'g' },
-          { name_de: 'Schwarze Oliven', name_en: 'Black olives', mengeGramm: 30, mengeStueck: 0, einheit: 'g' },
-          { name_de: 'Mandelmus', name_en: 'Almond butter', mengeGramm: 30, mengeStueck: 0, einheit: 'g' },
-          { name_de: 'Gurke', name_en: 'Cucumber', mengeGramm: 100, mengeStueck: 0, einheit: 'g' }
-        ]
-      },
-      {
-        id: 6,
-        name_de: 'Wildlachs mit Spargel (Fisch)',
-        name_en: 'Wild salmon with asparagus (fish)',
-        emoji: '🐟🌿',
-        kcal: 940, protein: 62, kh: 7, fett: 74,
-        zutaten: [
-          { name_de: 'Wildlachsfilet', name_en: 'Wild salmon fillet', mengeGramm: 250, mengeStueck: 0, einheit: 'g' },
-          { name_de: 'Grüner Spargel', name_en: 'Green asparagus', mengeGramm: 250, mengeStueck: 0, einheit: 'g' },
-          { name_de: 'Macadamianüsse', name_en: 'Macadamia nuts', mengeGramm: 30, mengeStueck: 0, einheit: 'g' }
-        ]
-      },
-      {
-        id: 7,
-        name_de: 'Garnelen-Avocado-Salat (Fisch)',
-        name_en: 'Shrimp avocado salad (seafood)',
-        emoji: '🍤🥗',
-        kcal: 910, protein: 68, kh: 8, fett: 65,
-        zutaten: [
-          { name_de: 'Riesengarnelen (roh)', name_en: 'Jumbo shrimp (raw)', mengeGramm: 250, mengeStueck: 0, einheit: 'g' },
-          { name_de: 'Eier', name_en: 'Eggs', mengeGramm: 0, mengeStueck: 3, einheit: 'Stück' },
-          { name_de: 'Avocado', name_en: 'Avocado', mengeGramm: 120, mengeStueck: 1, einheit: 'Stück' },
-          { name_de: 'Blattsalat (bunt)', name_en: 'Mixed salad greens', mengeGramm: 200, mengeStueck: 0, einheit: 'g' },
-          { name_de: 'Radieschen', name_en: 'Radishes', mengeGramm: 100, mengeStueck: 0, einheit: 'g' },
-          { name_de: 'Staudensellerie', name_en: 'Celery stalk', mengeGramm: 50, mengeStueck: 0, einheit: 'g' },
-          { name_de: 'Pinienkerne', name_en: 'Pine nuts', mengeGramm: 20, mengeStueck: 0, einheit: 'g' }
-        ]
+      function playClick() {
+        if (!soundEnabled) return;
+        try {
+          const ctx = getAudioCtx();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.frequency.value = 800;
+          osc.type = 'sine';
+          gain.gain.setValueAtTime(0.3, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+          osc.start(ctx.currentTime);
+          osc.stop(ctx.currentTime + 0.08);
+        } catch (e) {}
       }
-    ];
+      function playRemove() {
+        if (!soundEnabled) return;
+        try {
+          const ctx = getAudioCtx();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.frequency.value = 400;
+          osc.type = 'triangle';
+          gain.gain.setValueAtTime(0.25, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+          osc.start(ctx.currentTime);
+          osc.stop(ctx.currentTime + 0.1);
+        } catch (e) {}
+      }
 
-    // State: two slots (null or gericht id)
-    let selectedSlots = [null, null];
+      // ---------- LANGUAGE ----------
+      const translations = {
+        de: {
+          title: "🥑 Keto‑Baukasten · Varga",
+          subtitle: "nach Dr. Berg · 2 Mahlzeiten · <20g KH",
+          selectInfo0: "🔹 Wähle bis zu 2 Gerichte – klicke auf eine Karte",
+          selectInfo1: "🔹 1/2 Mahlzeiten gewählt – klicke für zweite Mahlzeit",
+          selectInfo2: "✅ Beide Mahlzeiten gewählt – perfekt!",
+          labelKcal: "Kalorien", labelProtein: "Protein", labelFett: "Fett", labelKh: "Netto‑KH",
+          shoppingTitle: "🛒 Einkaufsliste (1 Tag)", weekButton: "📆 Wocheneinkauf (×7) anzeigen",
+          resetButton: "↺ Auswahl zurücksetzen", weeklyTitle: "📦 Einkaufsliste für 7 Tage (gleiche Gerichte)",
+          hintOil: "Öle, Essig, Gewürze & Basics sind nicht aufgeführt.",
+          weekHint: "Basierend auf 7× der aktuellen Tagesauswahl. Öle & Basics nicht enthalten.",
+          thZutat: "Zutat", thMenge: "Menge", einheitStueck: "Stück", einheitGramm: "g",
+          langBtn: "🌐 EN", meal1: "1. Mahlzeit", meal2: "2. Mahlzeit",
+          slotEmpty: "+ Gericht wählen", slotRemove: "×",
+          checkAll: "☑ Alle abhaken", uncheckAll: "☐ Alle lösen",
+          zubereitungTitle: "📖 Zubereitung",
+          customTitle: "✨ Eigenes Gericht",
+          lblNameDe: "Name (DE)", lblNameEn: "Name (EN)", lblCategory: "Kategorie (für Emoji)",
+          lblEmoji: "Emoji", lblKcal: "kcal", lblProtein: "Protein (g)", lblFett: "Fett (g)", lblKh: "KH (g)",
+          lblZutaten: "Zutaten", lblZubereitung: "Zubereitung (optional)",
+          btnAddCustom: "➕ Eigenes Gericht",
+          saveCustom: "💾 Speichern", deleteCustom: "🗑 Löschen",
+          alertMaxMeals: "Beide Mahlzeiten sind bereits ausgewählt. Entferne zuerst eine Mahlzeit über das ×.",
+          alertFillRequired: "Bitte mindestens Name (DE) und Kalorien ausfüllen.",
+          confirmDelete: "Dieses eigene Gericht wirklich löschen?",
+          exportAll: "📦 Alle exportieren",
+          importBtn: "📥 Importieren",
+          editTooltip: "Bearbeiten",
+          exportTooltip: "Exportieren",
+          importSuccess: "Rezepte erfolgreich importiert.",
+          importError: "Fehler beim Import: Ungültige JSON-Datei.",
+          exportFileName: "keto-rezepte",
+          exportSingleFileName: "keto-rezept"
+        },
+        en: {
+          title: "🥑 Keto Builder · Varga",
+          subtitle: "Dr. Berg style · 2 meals · <20g carbs",
+          selectInfo0: "🔹 Select up to 2 meals – tap a card",
+          selectInfo1: "🔹 1/2 meals selected – tap for second meal",
+          selectInfo2: "✅ Both meals selected – perfect!",
+          labelKcal: "Calories", labelProtein: "Protein", labelFett: "Fat", labelKh: "Net Carbs",
+          shoppingTitle: "🛒 Shopping List (1 day)", weekButton: "📆 Weekly shopping (×7)",
+          resetButton: "↺ Reset selection", weeklyTitle: "📦 Shopping list for 7 days (same meals)",
+          hintOil: "Oils, vinegar, spices & basics are not listed.",
+          weekHint: "Based on 7× current daily selection. Oils & basics not included.",
+          thZutat: "Ingredient", thMenge: "Amount", einheitStueck: "piece(s)", einheitGramm: "g",
+          langBtn: "🌐 DE", meal1: "Meal 1", meal2: "Meal 2",
+          slotEmpty: "+ Select meal", slotRemove: "×",
+          checkAll: "☑ Check all", uncheckAll: "☐ Uncheck all",
+          zubereitungTitle: "📖 Preparation",
+          customTitle: "✨ Custom Meal",
+          lblNameDe: "Name (DE)", lblNameEn: "Name (EN)", lblCategory: "Category (for emoji)",
+          lblEmoji: "Emoji", lblKcal: "kcal", lblProtein: "Protein (g)", lblFett: "Fat (g)", lblKh: "Carbs (g)",
+          lblZutaten: "Ingredients", lblZubereitung: "Preparation (optional)",
+          btnAddCustom: "➕ Custom Meal",
+          saveCustom: "💾 Save", deleteCustom: "🗑 Delete",
+          alertMaxMeals: "Both meals already selected. Remove one first via ×.",
+          alertFillRequired: "Please fill in at least Name (DE) and Calories.",
+          confirmDelete: "Really delete this custom meal?",
+          exportAll: "📦 Export all",
+          importBtn: "📥 Import",
+          editTooltip: "Edit",
+          exportTooltip: "Export",
+          importSuccess: "Recipes imported successfully.",
+          importError: "Import error: Invalid JSON file.",
+          exportFileName: "keto-recipes",
+          exportSingleFileName: "keto-recipe"
+        }
+      };
+      let currentLang = 'de';
+      function t(key) { return translations[currentLang][key] || key; }
 
-    // DOM references
-    const grid = document.getElementById('gerichtGrid');
-    const slotsRow = document.getElementById('slotsRow');
-    const auswahlInfo = document.getElementById('auswahlInfo');
-    const summenBox = document.getElementById('summenBox');
-    const sumKcal = document.getElementById('sumKcal');
-    const sumProtein = document.getElementById('sumProtein');
-    const sumFett = document.getElementById('sumFett');
-    const sumKh = document.getElementById('sumKh');
-    const einkaufContainer = document.getElementById('einkaufContainer');
-    const tagesTabelleBody = document.querySelector('#tagesTabelle tbody');
-    const btnWochen = document.getElementById('btnWochen');
-    const btnResetTop = document.getElementById('btnResetTop');
-    const btnResetBottom = document.getElementById('btnResetBottom');
-    const wochenContainer = document.getElementById('wochenContainer');
-    const langToggle = document.getElementById('langToggle');
+      // ---------- EMOJI MAP ----------
+      const categoryEmoji = {
+        huhn: '🍗', fleisch: '🥩', fisch: '🐟', wraps: '🌯', faschiertes: '🐄',
+        salat: '🥗', eier: '🍳', suppe: '🍲', vegetarisch: '🥦'
+      };
 
-    function t(key) {
-      return translations[currentLang][key] || key;
-    }
+      // ---------- BASE GERICHTS ----------
+      const baseGerichte = [
+        { id: 1, name_de: 'Hähnchenkeule mit Avocado-Salat', name_en: 'Chicken Drumstick with Avocado Salad', emoji: '🍗🥑',
+          kcal: 900, protein: 48, kh: 9, fett: 73,
+          zubereitung_de: '1. Hähnchenkeulen mit Salz & Gewürzen einreiben.\n2. Bei 180°C Umluft ca. 35–40 Min. auf einem Rost knusprig backen.\n3. Avocado, Tomate, Gurke würfeln, mit Blattsalat mischen.\n4. Dressing aus Olivenöl, Essig, Salz & Pfeffer anrühren.\n5. Salat anrichten, Keule danebenlegen, Kürbiskerne drüber.',
+          zubereitung_en: '1. Rub chicken drumsticks with salt & spices.\n2. Bake at 180°C (convection) for 35–40 min on a rack until crispy.\n3. Dice avocado, tomato, cucumber, mix with lettuce.\n4. Whisk dressing from olive oil, vinegar, salt & pepper.\n5. Plate salad, add drumstick, sprinkle pumpkin seeds.',
+          zutaten: [
+            { name_de: 'Hähnchenkeule (mit Haut)', name_en: 'Chicken drumstick (skin on)', mengeGramm: 300, mengeStueck: 0, einheit: 'g' },
+            { name_de: 'Avocado', name_en: 'Avocado', mengeGramm: 120, mengeStueck: 1, einheit: 'Stück' },
+            { name_de: 'Blattsalat (gemischt)', name_en: 'Mixed lettuce', mengeGramm: 150, mengeStueck: 0, einheit: 'g' },
+            { name_de: 'Tomate', name_en: 'Tomato', mengeGramm: 80, mengeStueck: 1, einheit: 'Stück' },
+            { name_de: 'Gurke', name_en: 'Cucumber', mengeGramm: 80, mengeStueck: 0, einheit: 'g' },
+            { name_de: 'Kürbiskerne', name_en: 'Pumpkin seeds', mengeGramm: 15, mengeStueck: 0, einheit: 'g' }
+          ]
+        },
+        { id: 2, name_de: 'Rumpsteak mit Skyr-Dip & Spinat', name_en: 'Rump steak with Skyr dip & spinach', emoji: '🥩🥬',
+          kcal: 950, protein: 80, kh: 9, fett: 62,
+          zubereitung_de: '1. Steak 30 Min. vorher aus dem Kühlschrank nehmen.\n2. In Butterschmalz von beiden Seiten je 3–4 Min. braten (medium).\n3. Spinat in einer Pfanne mit etwas Butter zusammenfallen lassen, würzen.\n4. Skyr mit Wasser cremig rühren, Kräuter & Salz unterheben.\n5. Steak in Streifen schneiden, mit Dip & Spinat servieren, Mandelblättchen drüber.',
+          zubereitung_en: '1. Take steak out of fridge 30 min before cooking.\n2. Fry in clarified butter 3–4 min per side (medium).\n3. Wilt spinach in a pan with butter, season.\n4. Stir skyr with water until creamy, add herbs & salt.\n5. Slice steak, serve with dip & spinach, top with sliced almonds.',
+          zutaten: [
+            { name_de: 'Rumpsteak', name_en: 'Rump steak', mengeGramm: 300, mengeStueck: 0, einheit: 'g' },
+            { name_de: 'Skyr (Natur)', name_en: 'Skyr (plain)', mengeGramm: 150, mengeStueck: 0, einheit: 'g' },
+            { name_de: 'Blattspinat', name_en: 'Leaf spinach', mengeGramm: 250, mengeStueck: 0, einheit: 'g' },
+            { name_de: 'Mandelblättchen', name_en: 'Sliced almonds', mengeGramm: 50, mengeStueck: 0, einheit: 'g' }
+          ]
+        },
+        { id: 3, name_de: 'Hähnchen-Omelett mit Brokkoli', name_en: 'Chicken omelette with broccoli', emoji: '🍳🥦',
+          kcal: 920, protein: 110, kh: 9, fett: 50,
+          zubereitung_de: '1. Hähnchenbrust in Streifen schneiden, in Kokosöl braten.\n2. Brokkoli dämpfen (ca. 5 Min.).\n3. Eier verquirlen, über das Hähnchen gießen, stocken lassen.\n4. Cheddar darüber hobeln, schmelzen lassen.\n5. Mit Brokkoli servieren.',
+          zubereitung_en: '1. Cut chicken breast into strips, fry in coconut oil.\n2. Steam broccoli for about 5 min.\n3. Whisk eggs, pour over chicken, let set.\n4. Grate cheddar on top, let melt.\n5. Serve with broccoli.',
+          zutaten: [
+            { name_de: 'Hähnchenbrustfilet', name_en: 'Chicken breast fillet', mengeGramm: 400, mengeStueck: 0, einheit: 'g' },
+            { name_de: 'Eier', name_en: 'Eggs', mengeGramm: 0, mengeStueck: 3, einheit: 'Stück' },
+            { name_de: 'Brokkoli', name_en: 'Broccoli', mengeGramm: 250, mengeStueck: 0, einheit: 'g' },
+            { name_de: 'Cheddar (labfrei)', name_en: 'Cheddar (rennet-free)', mengeGramm: 30, mengeStueck: 0, einheit: 'g' }
+          ]
+        },
+        { id: 4, name_de: 'Rinderhack-Pfanne mit Avocado', name_en: 'Ground beef pan with avocado', emoji: '🐄🥑',
+          kcal: 980, protein: 55, kh: 8, fett: 78,
+          zubereitung_de: '1. Rinderhack krümelig braten, mit Salz, Kreuzkümmel, Knoblauch würzen.\n2. Champignons & Zucchini klein schneiden, mitbraten.\n3. Avocado würfeln, unter das warme Hack heben.\n4. Rucola auf einem Teller anrichten, Hackmischung darauf geben.',
+          zubereitung_en: '1. Fry ground beef until crumbly, season with salt, cumin, garlic.\n2. Chop mushrooms & zucchini, fry with the meat.\n3. Dice avocado, fold into warm beef.\n4. Plate arugula, top with beef mixture.',
+          zutaten: [
+            { name_de: 'Rinderhack (20% Fett)', name_en: 'Ground beef (20% fat)', mengeGramm: 300, mengeStueck: 0, einheit: 'g' },
+            { name_de: 'Champignons', name_en: 'Mushrooms', mengeGramm: 100, mengeStueck: 0, einheit: 'g' },
+            { name_de: 'Zucchini', name_en: 'Zucchini', mengeGramm: 150, mengeStueck: 0, einheit: 'g' },
+            { name_de: 'Avocado', name_en: 'Avocado', mengeGramm: 120, mengeStueck: 1, einheit: 'Stück' },
+            { name_de: 'Rucola', name_en: 'Arugula', mengeGramm: 150, mengeStueck: 0, einheit: 'g' }
+          ]
+        },
+        { id: 5, name_de: 'Puten-Wraps mit Mandelsoße', name_en: 'Turkey wraps with almond sauce', emoji: '🌯🥬',
+          kcal: 890, protein: 70, kh: 10, fett: 60,
+          zubereitung_de: '1. Putenbrust in Streifen braten.\n2. Mandelmus mit Wasser, Salz & Zitronensaft cremig rühren.\n3. Romanasalat-Blätter als Wrap verwenden.\n4. Pute, Avocado-Würfel, Paprika & Oliven in die Blätter füllen.\n5. Mandelsoße darüber geben, Gurke als Beilage.',
+          zubereitung_en: '1. Fry turkey breast strips.\n2. Mix almond butter with water, salt & lemon juice until creamy.\n3. Use whole romaine leaves as wraps.\n4. Fill with turkey, diced avocado, bell pepper & olives.\n5. Drizzle almond sauce, serve cucumber on the side.',
+          zutaten: [
+            { name_de: 'Putenbrustfilet', name_en: 'Turkey breast fillet', mengeGramm: 300, mengeStueck: 0, einheit: 'g' },
+            { name_de: 'Romanasalat (ganze Blätter)', name_en: 'Romaine lettuce (whole leaves)', mengeGramm: 150, mengeStueck: 0, einheit: 'g' },
+            { name_de: 'Avocado', name_en: 'Avocado', mengeGramm: 120, mengeStueck: 1, einheit: 'Stück' },
+            { name_de: 'Rote Paprika', name_en: 'Red bell pepper', mengeGramm: 50, mengeStueck: 0, einheit: 'g' },
+            { name_de: 'Schwarze Oliven', name_en: 'Black olives', mengeGramm: 30, mengeStueck: 0, einheit: 'g' },
+            { name_de: 'Mandelmus', name_en: 'Almond butter', mengeGramm: 30, mengeStueck: 0, einheit: 'g' },
+            { name_de: 'Gurke', name_en: 'Cucumber', mengeGramm: 100, mengeStueck: 0, einheit: 'g' }
+          ]
+        },
+        { id: 6, name_de: 'Wildlachs mit Spargel (Fisch)', name_en: 'Wild salmon with asparagus (fish)', emoji: '🐟🌿',
+          kcal: 940, protein: 62, kh: 7, fett: 74,
+          zubereitung_de: '1. Lachsfilet in Butter braten, salzen & pfeffern.\n2. Spargel in wenig Wasser dünsten, danach in Butter schwenken.\n3. Olivenöl & Zitronensaft über den Lachs geben.\n4. Macadamianüsse hacken, über das Gemüse streuen.',
+          zubereitung_en: '1. Fry salmon fillet in butter, season with salt & pepper.\n2. Steam asparagus, then toss in butter.\n3. Drizzle olive oil & lemon juice over salmon.\n4. Chop macadamia nuts, sprinkle over vegetables.',
+          zutaten: [
+            { name_de: 'Wildlachsfilet', name_en: 'Wild salmon fillet', mengeGramm: 250, mengeStueck: 0, einheit: 'g' },
+            { name_de: 'Grüner Spargel', name_en: 'Green asparagus', mengeGramm: 250, mengeStueck: 0, einheit: 'g' },
+            { name_de: 'Macadamianüsse', name_en: 'Macadamia nuts', mengeGramm: 30, mengeStueck: 0, einheit: 'g' }
+          ]
+        },
+        { id: 7, name_de: 'Garnelen-Avocado-Salat (Fisch)', name_en: 'Shrimp avocado salad (seafood)', emoji: '🍤🥗',
+          kcal: 910, protein: 68, kh: 8, fett: 65,
+          zubereitung_de: '1. Garnelen in Olivenöl mit Chili & Knoblauch anbraten.\n2. Eier hart kochen, vierteln.\n3. Avocado würfeln, mit Blattsalat, Radieschen & Sellerie mischen.\n4. Dressing aus Olivenöl, Zitronensaft, Salz & Pfeffer.\n5. Garnelen & Eier auf dem Salat anrichten, Pinienkerne drüber.',
+          zubereitung_en: '1. Sauté shrimp in olive oil with chili & garlic.\n2. Hard-boil eggs, quarter.\n3. Dice avocado, mix with salad greens, radishes & celery.\n4. Dressing from olive oil, lemon juice, salt & pepper.\n5. Arrange shrimp & eggs on salad, top with pine nuts.',
+          zutaten: [
+            { name_de: 'Riesengarnelen (roh)', name_en: 'Jumbo shrimp (raw)', mengeGramm: 250, mengeStueck: 0, einheit: 'g' },
+            { name_de: 'Eier', name_en: 'Eggs', mengeGramm: 0, mengeStueck: 3, einheit: 'Stück' },
+            { name_de: 'Avocado', name_en: 'Avocado', mengeGramm: 120, mengeStueck: 1, einheit: 'Stück' },
+            { name_de: 'Blattsalat (bunt)', name_en: 'Mixed salad greens', mengeGramm: 200, mengeStueck: 0, einheit: 'g' },
+            { name_de: 'Radieschen', name_en: 'Radishes', mengeGramm: 100, mengeStueck: 0, einheit: 'g' },
+            { name_de: 'Staudensellerie', name_en: 'Celery stalk', mengeGramm: 50, mengeStueck: 0, einheit: 'g' },
+            { name_de: 'Pinienkerne', name_en: 'Pine nuts', mengeGramm: 20, mengeStueck: 0, einheit: 'g' }
+          ]
+        }
+      ];
 
-    function getDishName(dish) {
-      return currentLang === 'de' ? dish.name_de : dish.name_en;
-    }
+      // ---------- STATE ----------
+      let selectedSlots = [null, null];
+      let customMeals = [];
 
-    function getIngredientName(zutat) {
-      return currentLang === 'de' ? zutat.name_de : zutat.name_en;
-    }
+      // Load custom meals from localStorage
+      function loadCustomMeals() {
+        const stored = localStorage.getItem('ketoCustomMeals');
+        if (stored) {
+          try { customMeals = JSON.parse(stored); } catch(e) { customMeals = []; }
+        }
+      }
+      function saveCustomMeals() {
+        localStorage.setItem('ketoCustomMeals', JSON.stringify(customMeals));
+      }
 
-    function translateEinheit(einheit) {
-      if (einheit === 'Stück') return t('einheitStueck');
-      if (einheit === 'g') return t('einheitGramm');
-      return einheit;
-    }
+      function getAllGerichte() {
+        return [...baseGerichte, ...customMeals];
+      }
 
-    function countInSlots(id) {
-      return selectedSlots.filter(s => s === id).length;
-    }
+      // ---------- DOM REFS ----------
+      const grid = document.getElementById('gerichtGrid');
+      const slotsRow = document.getElementById('slotsRow');
+      const auswahlInfo = document.getElementById('auswahlInfo');
+      const summenBox = document.getElementById('summenBox');
+      const sumKcal = document.getElementById('sumKcal'), sumProtein = document.getElementById('sumProtein');
+      const sumFett = document.getElementById('sumFett'), sumKh = document.getElementById('sumKh');
+      const einkaufContainer = document.getElementById('einkaufContainer');
+      const tagesTabelleBody = document.querySelector('#tagesTabelle tbody');
+      const btnWochen = document.getElementById('btnWochen');
+      const btnResetTop = document.getElementById('btnResetTop'), btnResetBottom = document.getElementById('btnResetBottom');
+      const wochenContainer = document.getElementById('wochenContainer');
+      const langToggle = document.getElementById('langToggle');
+      const soundToggle = document.getElementById('soundToggle');
+      const btnAddCustom = document.getElementById('btnAddCustom');
+      const modalZubereitung = document.getElementById('modalZubereitung');
+      const modalCustom = document.getElementById('modalCustom');
+      const zubereitungContent = document.getElementById('zubereitungContent');
+      const zubereitungTitle = document.getElementById('zubereitungTitle');
+      const btnCheckAll = document.getElementById('btnCheckAll');
+      const btnUncheckAll = document.getElementById('btnUncheckAll');
+      const btnImport = document.getElementById('btnImport');
+      const btnExportAll = document.getElementById('btnExportAll');
+      const importFileInput = document.getElementById('importFileInput');
 
-    function getSelectedGerichte() {
-      return selectedSlots.filter(id => id !== null).map(id => gerichte.find(g => g.id === id));
-    }
+      // ---------- HELPERS ----------
+      function getDishName(dish) { return currentLang === 'de' ? dish.name_de : dish.name_en; }
+      function getIngredientName(zut) { return currentLang === 'de' ? zut.name_de : zut.name_en; }
+      function translateEinheit(e) { return e === 'Stück' ? t('einheitStueck') : t('einheitGramm'); }
+      function countInSlots(id) { return selectedSlots.filter(s => s === id).length; }
+      function getSelectedGerichte() {
+        const all = getAllGerichte();
+        return selectedSlots.filter(id => id !== null).map(id => all.find(g => g.id === id)).filter(Boolean);
+      }
 
-    function applyLanguage() {
-      document.getElementById('mainTitle').textContent = t('title');
-      document.getElementById('subtitle').innerHTML = t('subtitle');
-      document.getElementById('labelKcal').textContent = t('labelKcal');
-      document.getElementById('labelProtein').textContent = t('labelProtein');
-      document.getElementById('labelFett').textContent = t('labelFett');
-      document.getElementById('labelKh').textContent = t('labelKh');
-      document.getElementById('shoppingTitle').textContent = t('shoppingTitle');
-      document.getElementById('hintOil').textContent = t('hintOil');
-      document.getElementById('btnWochen').textContent = t('weekButton');
-      document.getElementById('btnResetTop').textContent = t('resetButton');
-      document.getElementById('btnResetBottom').textContent = t('resetButton');
-      document.getElementById('thZutat').textContent = t('thZutat');
-      document.getElementById('thMenge').textContent = t('thMenge');
-      langToggle.textContent = t('langBtn');
-      renderAll();
-    }
+      // ---------- RENDER ----------
+      function renderGrid() {
+        grid.innerHTML = '';
+        const all = getAllGerichte();
+        all.forEach(g => {
+          const selCount = countInSlots(g.id);
+          const isCustom = customMeals.some(c => c.id === g.id);
+          const card = document.createElement('div');
+          card.className = `gericht-card ${selCount > 0 ? 'active-badge' : ''}`;
+          card.dataset.id = g.id;
+          card.innerHTML = `
+            ${selCount > 0 ? `<span class="badge">${selCount}</span>` : ''}
+            ${isCustom ? '<span class="custom-star">⭐</span>' : ''}
+            <div class="gericht-emoji">${g.emoji || '🍽️'}</div>
+            <div class="gericht-name">${getDishName(g)}</div>
+            <div class="gericht-kcal">~${g.kcal} kcal</div>
+            <div class="card-icons">
+              ${g.zubereitung_de || g.zubereitung_en ? `<button class="card-icon-btn zubereitung-btn" data-id="${g.id}" title="Zubereitung">📖</button>` : ''}
+              ${isCustom ? `<button class="card-icon-btn edit-custom-btn" data-id="${g.id}" title="${t('editTooltip')}">✏️</button>` : ''}
+              ${isCustom ? `<button class="card-icon-btn export-single-btn" data-id="${g.id}" title="${t('exportTooltip')}">📤</button>` : ''}
+            </div>
+          `;
+          card.addEventListener('click', (e) => {
+            if (e.target.closest('.zubereitung-btn') || e.target.closest('.edit-custom-btn') || e.target.closest('.export-single-btn') || e.target.closest('.card-icon-btn')) return;
+            handleGerichtClick(g.id);
+          });
+          grid.appendChild(card);
+        });
+        // Attach event listeners for preparation, edit, export buttons
+        document.querySelectorAll('.zubereitung-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const id = parseInt(btn.dataset.id);
+            const gericht = getAllGerichte().find(g => g.id === id);
+            if (gericht) showZubereitung(gericht);
+          });
+        });
+        document.querySelectorAll('.edit-custom-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const id = parseInt(btn.dataset.id);
+            const gericht = customMeals.find(g => g.id === id);
+            if (gericht) openCustomModal(gericht);
+          });
+        });
+        document.querySelectorAll('.export-single-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const id = parseInt(btn.dataset.id);
+            const gericht = customMeals.find(g => g.id === id);
+            if (gericht) exportSingleMeal(gericht);
+          });
+        });
+      }
 
-    function updateInfoText() {
-      const count = selectedSlots.filter(s => s !== null).length;
-      if (count === 0) auswahlInfo.textContent = t('selectInfo0');
-      else if (count === 1) auswahlInfo.textContent = t('selectInfo1');
-      else auswahlInfo.textContent = t('selectInfo2');
-    }
+      function renderSlots() {
+        slotsRow.innerHTML = '';
+        const all = getAllGerichte();
+        for (let i = 0; i < 2; i++) {
+          const slotId = selectedSlots[i];
+          const gericht = slotId ? all.find(g => g.id === slotId) : null;
+          const slotDiv = document.createElement('div');
+          slotDiv.className = `meal-slot ${gericht ? 'filled' : ''}`;
+          slotDiv.innerHTML = `
+            <div class="meal-slot-label">${i === 0 ? t('meal1') : t('meal2')}</div>
+            ${gericht ? 
+              `<div class="meal-slot-emoji">${gericht.emoji || '🍽️'}</div>
+               <div class="meal-slot-content">${getDishName(gericht)}</div>
+               <button class="remove-slot" data-slot="${i}">${t('slotRemove')}</button>` 
+              : 
+              `<div class="meal-slot-content" style="color:#94a3b8;">${t('slotEmpty')}</div>`
+            }
+          `;
+          slotDiv.addEventListener('click', (e) => {
+            if (e.target.classList.contains('remove-slot')) return;
+          });
+          slotsRow.appendChild(slotDiv);
+        }
+        document.querySelectorAll('.remove-slot').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const slotIndex = parseInt(btn.dataset.slot);
+            selectedSlots[slotIndex] = null;
+            playRemove();
+            renderAll();
+          });
+        });
+      }
 
-    function renderGrid() {
-      grid.innerHTML = '';
-      gerichte.forEach(g => {
-        const card = document.createElement('div');
-        const selCount = countInSlots(g.id);
-        card.className = `gericht-card ${selCount > 0 ? 'active-badge' : ''}`;
-        card.dataset.id = g.id;
-        card.innerHTML = `
-          ${selCount > 0 ? `<span class="badge">${selCount}</span>` : ''}
-          <div class="gericht-emoji">${g.emoji}</div>
-          <div class="gericht-name">${getDishName(g)}</div>
-          <div class="gericht-kcal">~${g.kcal} kcal</div>
-        `;
-        card.addEventListener('click', () => handleGerichtClick(g.id));
-        grid.appendChild(card);
-      });
-    }
+      function handleGerichtClick(id) {
+        const emptyIndex = selectedSlots.findIndex(s => s === null);
+        if (emptyIndex === -1) {
+          alert(t('alertMaxMeals'));
+          return;
+        }
+        selectedSlots[emptyIndex] = id;
+        playClick();
+        renderAll();
+      }
 
-    function renderSlots() {
-      slotsRow.innerHTML = '';
-      for (let i = 0; i < 2; i++) {
-        const slotId = selectedSlots[i];
-        const gericht = slotId ? gerichte.find(g => g.id === slotId) : null;
-        const slotDiv = document.createElement('div');
-        slotDiv.className = `meal-slot ${gericht ? 'filled' : ''}`;
-        slotDiv.innerHTML = `
-          <div class="meal-slot-label">${i === 0 ? t('meal1') : t('meal2')}</div>
-          ${gericht ? 
-            `<div class="meal-slot-emoji">${gericht.emoji}</div>
-             <div class="meal-slot-content">${getDishName(gericht)}</div>
-             <button class="remove-slot" data-slot="${i}">${t('slotRemove')}</button>` 
-            : 
-            `<div class="meal-slot-content" style="color:#94a3b8;">${t('slotEmpty')}</div>`
+      function updateInfoText() {
+        const count = selectedSlots.filter(s => s !== null).length;
+        if (count === 0) auswahlInfo.textContent = t('selectInfo0');
+        else if (count === 1) auswahlInfo.textContent = t('selectInfo1');
+        else auswahlInfo.textContent = t('selectInfo2');
+      }
+
+      function renderAll() {
+        renderGrid();
+        renderSlots();
+        updateInfoText();
+        updateSummenAndEinkauf();
+      }
+
+      function updateSummenAndEinkauf() {
+        const selectedGerichte = getSelectedGerichte();
+        if (selectedGerichte.length > 0) {
+          summenBox.style.display = 'flex';
+          einkaufContainer.style.display = 'block';
+          const totalKcal = selectedGerichte.reduce((s,g) => s + g.kcal, 0);
+          const totalProtein = selectedGerichte.reduce((s,g) => s + g.protein, 0);
+          const totalFett = selectedGerichte.reduce((s,g) => s + g.fett, 0);
+          const totalKh = selectedGerichte.reduce((s,g) => s + g.kh, 0);
+          sumKcal.textContent = totalKcal;
+          sumProtein.textContent = totalProtein;
+          sumFett.textContent = totalFett;
+          sumKh.textContent = totalKh;
+          renderTagesEinkauf(selectedGerichte);
+        } else {
+          summenBox.style.display = 'none';
+          einkaufContainer.style.display = 'none';
+          wochenContainer.style.display = 'none';
+        }
+      }
+
+      function aggregateIngredients(selectedGerichte, factor = 1) {
+        const map = new Map();
+        selectedGerichte.forEach(g => {
+          g.zutaten.forEach(z => {
+            const key = getIngredientName(z);
+            const existing = map.get(key);
+            if (existing) {
+              existing.mengeGramm += z.mengeGramm * factor;
+              existing.mengeStueck += z.mengeStueck * factor;
+            } else {
+              map.set(key, { mengeGramm: z.mengeGramm * factor, mengeStueck: z.mengeStueck * factor, einheit: z.einheit });
+            }
+          });
+        });
+        return Array.from(map.entries()).map(([name, val]) => ({ name, ...val }));
+      }
+
+      function renderTagesEinkauf(selectedGerichte) {
+        const zutaten = aggregateIngredients(selectedGerichte, 1);
+        tagesTabelleBody.innerHTML = '';
+        zutaten.forEach((z, idx) => {
+          const row = document.createElement('tr');
+          row.dataset.index = idx;
+          let mengeAnzeige = '';
+          const einheitTrans = translateEinheit(z.einheit);
+          if (z.einheit === 'Stück') {
+            mengeAnzeige = `${z.mengeStueck} ${einheitTrans}`;
+            if (z.mengeGramm > 0) mengeAnzeige += ` (${z.mengeGramm} ${t('einheitGramm')})`;
+          } else {
+            mengeAnzeige = `${z.mengeGramm} ${einheitTrans}`;
           }
-        `;
-        slotDiv.addEventListener('click', (e) => {
-          if (e.target.classList.contains('remove-slot')) return;
+          row.innerHTML = `
+            <td class="check-col"><input type="checkbox" class="check-item" data-index="${idx}"></td>
+            <td>${z.name}</td><td>${mengeAnzeige}</td>
+          `;
+          tagesTabelleBody.appendChild(row);
         });
-        slotsRow.appendChild(slotDiv);
-      }
-      document.querySelectorAll('.remove-slot').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const slotIndex = parseInt(btn.dataset.slot);
-          selectedSlots[slotIndex] = null;
-          renderAll();
+        document.querySelectorAll('.check-item').forEach(cb => {
+          cb.addEventListener('change', function() {
+            this.closest('tr').classList.toggle('checked', this.checked);
+          });
         });
-      });
-    }
-
-    function handleGerichtClick(id) {
-      const emptyIndex = selectedSlots.findIndex(s => s === null);
-      if (emptyIndex === -1) {
-        alert(currentLang === 'de' ? 'Beide Mahlzeiten sind bereits ausgewählt. Entferne zuerst eine Mahlzeit über das ×.' : 'Both meals already selected. Remove one first via ×.');
-        return;
-      }
-      selectedSlots[emptyIndex] = id;
-      renderAll();
-    }
-
-    function renderAll() {
-      renderGrid();
-      renderSlots();
-      updateInfoText();
-      updateSummenAndEinkauf();
-    }
-
-    function updateSummenAndEinkauf() {
-      const selectedGerichte = getSelectedGerichte();
-      if (selectedGerichte.length > 0) {
-        summenBox.style.display = 'flex';
-        einkaufContainer.style.display = 'block';
-        
-        const totalKcal = selectedGerichte.reduce((s,g) => s + g.kcal, 0);
-        const totalProtein = selectedGerichte.reduce((s,g) => s + g.protein, 0);
-        const totalFett = selectedGerichte.reduce((s,g) => s + g.fett, 0);
-        const totalKh = selectedGerichte.reduce((s,g) => s + g.kh, 0);
-        
-        sumKcal.textContent = totalKcal;
-        sumProtein.textContent = totalProtein;
-        sumFett.textContent = totalFett;
-        sumKh.textContent = totalKh;
-        
-        renderTagesEinkauf(selectedGerichte);
-      } else {
-        summenBox.style.display = 'none';
-        einkaufContainer.style.display = 'none';
         wochenContainer.style.display = 'none';
       }
-    }
 
-    function aggregateIngredients(selectedGerichte, factor = 1) {
-      const map = new Map();
-      selectedGerichte.forEach(g => {
-        g.zutaten.forEach(z => {
-          const key = getIngredientName(z);
-          const existing = map.get(key);
-          if (existing) {
-            existing.mengeGramm += z.mengeGramm * factor;
-            existing.mengeStueck += z.mengeStueck * factor;
-          } else {
-            map.set(key, {
-              mengeGramm: z.mengeGramm * factor,
-              mengeStueck: z.mengeStueck * factor,
-              einheit: z.einheit
+      function zeigeWocheneinkauf() {
+        const selectedGerichte = getSelectedGerichte();
+        if (selectedGerichte.length === 0) { alert(t('selectInfo0')); return; }
+        const zutaten = aggregateIngredients(selectedGerichte, 7);
+        let html = `<h3>${t('weeklyTitle')}</h3><table><thead><tr><th>✓</th><th>${t('thZutat')}</th><th>${t('thMenge')}</th></tr></thead><tbody>`;
+        zutaten.forEach(z => {
+          let menge = '';
+          const et = translateEinheit(z.einheit);
+          if (z.einheit === 'Stück') {
+            menge = `${z.mengeStueck} ${et}`;
+            if (z.mengeGramm > 0) menge += ` (${z.mengeGramm} ${t('einheitGramm')})`;
+          } else menge = `${z.mengeGramm} ${et}`;
+          html += `<tr><td class="check-col"><input type="checkbox"></td><td>${z.name}</td><td>${menge}</td></tr>`;
+        });
+        html += `</tbody></table><div class="hinweis">${t('weekHint')}</div>`;
+        wochenContainer.innerHTML = html;
+        wochenContainer.style.display = 'block';
+        wochenContainer.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+          cb.addEventListener('change', function() {
+            this.closest('tr').classList.toggle('checked', this.checked);
+          });
+        });
+      }
+
+      function resetAuswahl() {
+        selectedSlots = [null, null];
+        playRemove();
+        renderAll();
+        wochenContainer.style.display = 'none';
+      }
+
+      // ---------- ZUBEREITUNG MODAL ----------
+      function showZubereitung(gericht) {
+        const text = currentLang === 'de' ? (gericht.zubereitung_de || '') : (gericht.zubereitung_en || '');
+        zubereitungContent.innerHTML = text.replace(/\n/g, '<br>');
+        zubereitungTitle.textContent = `📖 ${getDishName(gericht)}`;
+        modalZubereitung.classList.add('active');
+      }
+
+      document.getElementById('closeZubereitung').addEventListener('click', () => {
+        modalZubereitung.classList.remove('active');
+      });
+      modalZubereitung.addEventListener('click', function(e) { if (e.target === this) this.classList.remove('active'); });
+
+      // ---------- CUSTOM MEAL MODAL ----------
+      let editingId = null;
+
+      function openCustomModal(gericht = null) {
+        editingId = gericht ? gericht.id : null;
+        document.getElementById('customEditId').value = editingId || '';
+        document.getElementById('customNameDe').value = gericht ? gericht.name_de : '';
+        document.getElementById('customNameEn').value = gericht ? gericht.name_en : '';
+        document.getElementById('customEmoji').value = gericht ? gericht.emoji : '';
+        document.getElementById('customKcal').value = gericht ? gericht.kcal : '';
+        document.getElementById('customProtein').value = gericht ? gericht.protein : '';
+        document.getElementById('customFett').value = gericht ? gericht.fett : '';
+        document.getElementById('customKh').value = gericht ? gericht.kh : '';
+        document.getElementById('customZubereitung').value = gericht ? (currentLang === 'de' ? gericht.zubereitung_de : gericht.zubereitung_en) || '' : '';
+        document.getElementById('customCategory').value = '';
+        const ingContainer = document.getElementById('ingredientsContainer');
+        ingContainer.innerHTML = '';
+        const zutaten = gericht ? gericht.zutaten : [];
+        zutaten.forEach(z => addIngredientRow(z.name_de, z.name_en, z.mengeGramm, z.mengeStueck, z.einheit));
+        if (zutaten.length === 0) addIngredientRow();
+        document.getElementById('btnDeleteCustom').style.display = editingId && customMeals.some(c => c.id === editingId) ? 'inline-block' : 'none';
+        document.getElementById('customTitle').textContent = editingId ? '✏️ ' + t('customTitle') : t('customTitle');
+        modalCustom.classList.add('active');
+      }
+
+      function addIngredientRow(nameDe = '', nameEn = '', mengeG = 0, mengeS = 0, einheit = 'g') {
+        const container = document.getElementById('ingredientsContainer');
+        const row = document.createElement('div');
+        row.className = 'ingredient-row';
+        row.innerHTML = `
+          <input type="text" class="ing-name-de" placeholder="Name DE" value="${nameDe}">
+          <input type="text" class="ing-name-en" placeholder="Name EN" value="${nameEn}">
+          <input type="number" class="ing-menge" placeholder="Menge" value="${mengeG || mengeS || ''}" style="width:70px;">
+          <select class="ing-einheit">
+            <option value="g" ${einheit === 'g' ? 'selected' : ''}>g</option>
+            <option value="Stück" ${einheit === 'Stück' ? 'selected' : ''}>Stk</option>
+          </select>
+          <button class="ing-remove">✕</button>
+        `;
+        row.querySelector('.ing-remove').addEventListener('click', () => row.remove());
+        container.appendChild(row);
+      }
+
+      function getIngredientsFromForm() {
+        const rows = document.querySelectorAll('.ingredient-row');
+        const zutaten = [];
+        rows.forEach(row => {
+          const nameDe = row.querySelector('.ing-name-de').value.trim();
+          const nameEn = row.querySelector('.ing-name-en').value.trim();
+          const menge = parseFloat(row.querySelector('.ing-menge').value) || 0;
+          const einheit = row.querySelector('.ing-einheit').value;
+          if (nameDe || nameEn) {
+            zutaten.push({
+              name_de: nameDe, name_en: nameEn || nameDe,
+              mengeGramm: einheit === 'g' ? menge : 0,
+              mengeStueck: einheit === 'Stück' ? menge : 0,
+              einheit: einheit
             });
           }
         });
-      });
-      return Array.from(map.entries()).map(([name, val]) => ({ name, ...val }));
-    }
-
-    function renderTagesEinkauf(selectedGerichte) {
-      const zutaten = aggregateIngredients(selectedGerichte, 1);
-      tagesTabelleBody.innerHTML = '';
-      zutaten.forEach(z => {
-        const row = document.createElement('tr');
-        let mengeAnzeige = '';
-        const einheitTrans = translateEinheit(z.einheit);
-        if (z.einheit === 'Stück') {
-          mengeAnzeige = `${z.mengeStueck} ${einheitTrans}`;
-          if (z.mengeGramm > 0) mengeAnzeige += ` (${z.mengeGramm} ${t('einheitGramm')})`;
-        } else {
-          mengeAnzeige = `${z.mengeGramm} ${einheitTrans}`;
-        }
-        row.innerHTML = `<td>${z.name}</td><td>${mengeAnzeige}</td>`;
-        tagesTabelleBody.appendChild(row);
-      });
-      wochenContainer.style.display = 'none';
-    }
-
-    function zeigeWocheneinkauf() {
-      const selectedGerichte = getSelectedGerichte();
-      if (selectedGerichte.length === 0) {
-        alert(t('selectInfo0'));
-        return;
+        return zutaten;
       }
-      const zutaten = aggregateIngredients(selectedGerichte, 7);
-      
-      let html = `<h3>${t('weeklyTitle')}</h3><table><thead><tr><th>${t('thZutat')}</th><th>${t('thMenge')}</th></tr></thead><tbody>`;
-      zutaten.forEach(z => {
-        let mengeAnzeige = '';
-        const einheitTrans = translateEinheit(z.einheit);
-        if (z.einheit === 'Stück') {
-          mengeAnzeige = `${z.mengeStueck} ${einheitTrans}`;
-          if (z.mengeGramm > 0) mengeAnzeige += ` (${z.mengeGramm} ${t('einheitGramm')})`;
-        } else {
-          mengeAnzeige = `${z.mengeGramm} ${einheitTrans}`;
+
+      document.getElementById('btnAddIngredient').addEventListener('click', () => addIngredientRow());
+      document.getElementById('customCategory').addEventListener('change', function() {
+        const emoji = categoryEmoji[this.value] || '';
+        if (emoji && !document.getElementById('customEmoji').value) {
+          document.getElementById('customEmoji').value = emoji;
         }
-        html += `<tr><td>${z.name}</td><td>${mengeAnzeige}</td></tr>`;
       });
-      html += `</tbody></table><div class="hinweis">${t('weekHint')}</div>`;
-      wochenContainer.innerHTML = html;
-      wochenContainer.style.display = 'block';
-    }
 
-    function resetAuswahl() {
-      selectedSlots = [null, null];
-      renderAll();
-      wochenContainer.style.display = 'none';
-    }
+      document.getElementById('btnSaveCustom').addEventListener('click', () => {
+        const nameDe = document.getElementById('customNameDe').value.trim();
+        const nameEn = document.getElementById('customNameEn').value.trim();
+        const kcal = parseFloat(document.getElementById('customKcal').value) || 0;
+        if (!nameDe || !kcal) { alert(t('alertFillRequired')); return; }
+        const zubereitungText = document.getElementById('customZubereitung').value.trim();
+        const gerichtData = {
+          id: editingId || Date.now(),
+          name_de: nameDe,
+          name_en: nameEn || nameDe,
+          emoji: document.getElementById('customEmoji').value || '🍽️',
+          kcal: kcal,
+          protein: parseFloat(document.getElementById('customProtein').value) || 0,
+          fett: parseFloat(document.getElementById('customFett').value) || 0,
+          kh: parseFloat(document.getElementById('customKh').value) || 0,
+          zubereitung_de: zubereitungText,
+          zubereitung_en: zubereitungText,
+          zutaten: getIngredientsFromForm(),
+        };
+        if (editingId) {
+          const idx = customMeals.findIndex(c => c.id === editingId);
+          if (idx !== -1) customMeals[idx] = gerichtData;
+        } else {
+          customMeals.push(gerichtData);
+        }
+        saveCustomMeals();
+        modalCustom.classList.remove('active');
+        selectedSlots = selectedSlots.map(s => s === editingId ? gerichtData.id : s); // update slot references if id changed
+        renderAll();
+      });
 
-    langToggle.addEventListener('click', () => {
-      currentLang = currentLang === 'de' ? 'en' : 'de';
+      document.getElementById('btnDeleteCustom').addEventListener('click', () => {
+        if (!editingId) return;
+        if (!confirm(t('confirmDelete'))) return;
+        customMeals = customMeals.filter(c => c.id !== editingId);
+        saveCustomMeals();
+        selectedSlots = selectedSlots.map(s => s === editingId ? null : s);
+        modalCustom.classList.remove('active');
+        renderAll();
+      });
+
+      document.getElementById('closeCustom').addEventListener('click', () => modalCustom.classList.remove('active'));
+      modalCustom.addEventListener('click', function(e) { if (e.target === this) this.classList.remove('active'); });
+
+      btnAddCustom.addEventListener('click', () => openCustomModal());
+
+      // ---------- IMPORT / EXPORT ----------
+      function exportSingleMeal(meal) {
+        const data = JSON.stringify(meal, null, 2);
+        const blob = new Blob([data], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${t('exportSingleFileName')}-${meal.name_de.replace(/\s+/g, '_')}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+
+      function exportAllMeals() {
+        if (customMeals.length === 0) {
+          alert('Keine eigenen Rezepte zum Exportieren.');
+          return;
+        }
+        const data = JSON.stringify(customMeals, null, 2);
+        const blob = new Blob([data], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${t('exportFileName')}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+
+      function importMeals(file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          try {
+            const json = JSON.parse(e.target.result);
+            let mealsToImport = [];
+            if (Array.isArray(json)) {
+              mealsToImport = json;
+            } else if (typeof json === 'object' && json.name_de && json.kcal) {
+              mealsToImport = [json];
+            } else {
+              throw new Error('Ungültiges Format');
+            }
+            // Give new unique ids to avoid collisions
+            mealsToImport = mealsToImport.map(m => ({ ...m, id: Date.now() + Math.random() }));
+            customMeals = [...customMeals, ...mealsToImport];
+            saveCustomMeals();
+            renderAll();
+            alert(t('importSuccess'));
+          } catch (err) {
+            alert(t('importError'));
+          }
+        };
+        reader.readAsText(file);
+      }
+
+      btnImport.addEventListener('click', () => importFileInput.click());
+      importFileInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+          importMeals(e.target.files[0]);
+          importFileInput.value = ''; // reset
+        }
+      });
+
+      btnExportAll.addEventListener('click', exportAllMeals);
+
+      // ---------- CHECKLIST ----------
+      btnCheckAll.addEventListener('click', () => {
+        document.querySelectorAll('#tagesTabelle .check-item').forEach(cb => { cb.checked = true; cb.closest('tr').classList.add('checked'); });
+        if (wochenContainer.style.display !== 'none') {
+          wochenContainer.querySelectorAll('input[type="checkbox"]').forEach(cb => { cb.checked = true; cb.closest('tr').classList.add('checked'); });
+        }
+      });
+      btnUncheckAll.addEventListener('click', () => {
+        document.querySelectorAll('#tagesTabelle .check-item').forEach(cb => { cb.checked = false; cb.closest('tr').classList.remove('checked'); });
+        if (wochenContainer.style.display !== 'none') {
+          wochenContainer.querySelectorAll('input[type="checkbox"]').forEach(cb => { cb.checked = false; cb.closest('tr').classList.remove('checked'); });
+        }
+      });
+
+      // ---------- SOUND TOGGLE ----------
+      soundToggle.addEventListener('click', () => {
+        soundEnabled = !soundEnabled;
+        soundToggle.textContent = soundEnabled ? '🔊' : '🔇';
+        soundToggle.classList.toggle('muted', !soundEnabled);
+      });
+
+      // ---------- LANGUAGE ----------
+      function applyLanguage() {
+        document.getElementById('mainTitle').textContent = t('title');
+        document.getElementById('subtitle').innerHTML = t('subtitle');
+        document.getElementById('labelKcal').textContent = t('labelKcal');
+        document.getElementById('labelProtein').textContent = t('labelProtein');
+        document.getElementById('labelFett').textContent = t('labelFett');
+        document.getElementById('labelKh').textContent = t('labelKh');
+        document.getElementById('shoppingTitle').textContent = t('shoppingTitle');
+        document.getElementById('hintOil').textContent = t('hintOil');
+        document.getElementById('btnWochen').textContent = t('weekButton');
+        document.getElementById('btnResetTop').textContent = t('resetButton');
+        document.getElementById('btnResetBottom').textContent = t('resetButton');
+        document.getElementById('thZutat').textContent = t('thZutat');
+        document.getElementById('thMenge').textContent = t('thMenge');
+        document.getElementById('btnCheckAll').textContent = t('checkAll');
+        document.getElementById('btnUncheckAll').textContent = t('uncheckAll');
+        document.getElementById('btnAddCustom').textContent = t('btnAddCustom');
+        document.getElementById('btnImport').textContent = t('importBtn');
+        document.getElementById('btnExportAll').textContent = t('exportAll');
+        document.getElementById('customTitle').textContent = editingId ? '✏️ ' + t('customTitle') : t('customTitle');
+        document.getElementById('lblNameDe').textContent = t('lblNameDe');
+        document.getElementById('lblNameEn').textContent = t('lblNameEn');
+        document.getElementById('lblCategory').textContent = t('lblCategory');
+        document.getElementById('lblEmoji').textContent = t('lblEmoji');
+        document.getElementById('lblKcal').textContent = t('lblKcal');
+        document.getElementById('lblProtein').textContent = t('lblProtein');
+        document.getElementById('lblFett').textContent = t('lblFett');
+        document.getElementById('lblKh').textContent = t('lblKh');
+        document.getElementById('lblZutaten').textContent = t('lblZutaten');
+        document.getElementById('lblZubereitung').textContent = t('lblZubereitung');
+        document.getElementById('btnSaveCustom').textContent = t('saveCustom');
+        document.getElementById('btnDeleteCustom').textContent = t('deleteCustom');
+        langToggle.textContent = t('langBtn');
+        renderAll();
+      }
+
+      langToggle.addEventListener('click', () => {
+        currentLang = currentLang === 'de' ? 'en' : 'de';
+        applyLanguage();
+      });
+
+      // ---------- EVENT LISTENERS ----------
+      btnWochen.addEventListener('click', zeigeWocheneinkauf);
+      btnResetTop.addEventListener('click', resetAuswahl);
+      btnResetBottom.addEventListener('click', resetAuswahl);
+
+      // ---------- INIT ----------
+      loadCustomMeals();
       applyLanguage();
-    });
-
-    btnWochen.addEventListener('click', zeigeWocheneinkauf);
-    btnResetTop.addEventListener('click', resetAuswahl);
-    btnResetBottom.addEventListener('click', resetAuswahl);
-
-    // Initial render
-    applyLanguage();
-  })();
-</script>
+    })();
+  </script>
 </body>
 </html>
